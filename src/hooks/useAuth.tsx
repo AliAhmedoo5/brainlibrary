@@ -83,6 +83,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
+    const savedLocalSession = localStorage.getItem('brain_local_session');
+    if (savedLocalSession) {
+      try {
+        const localUser = JSON.parse(savedLocalSession);
+        setUser(localUser);
+        setIsDemo(false);
+        setLoading(false);
+        return;
+      } catch (e) {
+        localStorage.removeItem('brain_local_session');
+      }
+    }
+
     if (auth && isFirebaseConfigured) {
       try {
         const unsubscribe = onAuthStateChanged(
@@ -131,18 +144,79 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signInWithEmail = async (e: string, p: string) => {
-    if (!auth || !isFirebaseConfigured) {
+    localStorage.removeItem('brain_demo_session');
+    localStorage.removeItem('brain_local_session');
+    
+    if (!isFirebaseConfigured) {
+      const accountsStr = localStorage.getItem('brain_local_accounts') || '[]';
+      const accounts = JSON.parse(accountsStr);
+      const matched = accounts.find(
+        (acc: any) => acc.email.toLowerCase() === e.toLowerCase() && acc.password === p
+      );
+      if (!matched) {
+        throw { code: 'auth/invalid-credential', message: 'Invalid credentials.' };
+      }
+      const profile: UserProfile = {
+        uid: matched.uid,
+        email: matched.email,
+        displayName: matched.displayName || matched.email.split('@')[0],
+        locale: 'en',
+        theme: 'dark'
+      };
+      localStorage.setItem('brain_local_session', JSON.stringify(profile));
+      setUser(profile);
+      setIsDemo(false);
+      return;
+    }
+
+    if (!auth) {
       throw new Error('Firebase authentication is not configured.');
     }
-    localStorage.removeItem('brain_demo_session');
     await signInWithEmailAndPassword(auth, e, p);
   };
 
   const signUpWithEmail = async (e: string, p: string, name?: string) => {
-    if (!auth || !isFirebaseConfigured) {
+    localStorage.removeItem('brain_demo_session');
+    localStorage.removeItem('brain_local_session');
+
+    if (!isFirebaseConfigured) {
+      const accountsStr = localStorage.getItem('brain_local_accounts') || '[]';
+      const accounts = JSON.parse(accountsStr);
+      const exists = accounts.some(
+        (acc: any) => acc.email.toLowerCase() === e.toLowerCase()
+      );
+      if (exists) {
+        throw { code: 'auth/email-already-in-use', message: 'Email already in use.' };
+      }
+      if (p.length < 6) {
+        throw { code: 'auth/weak-password', message: 'Weak password.' };
+      }
+      const newUid = `local_user_${Date.now()}`;
+      const newAccount = {
+        uid: newUid,
+        email: e,
+        password: p,
+        displayName: name || e.split('@')[0]
+      };
+      accounts.push(newAccount);
+      localStorage.setItem('brain_local_accounts', JSON.stringify(accounts));
+
+      const profile: UserProfile = {
+        uid: newUid,
+        email: e,
+        displayName: name || e.split('@')[0],
+        locale: 'en',
+        theme: 'dark'
+      };
+      localStorage.setItem('brain_local_session', JSON.stringify(profile));
+      setUser(profile);
+      setIsDemo(false);
+      return;
+    }
+
+    if (!auth) {
       throw new Error('Firebase authentication is not configured.');
     }
-    localStorage.removeItem('brain_demo_session');
     const cred = await createUserWithEmailAndPassword(auth, e, p);
     setUser({
       uid: cred.user.uid,
@@ -158,18 +232,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       throw new Error('Firebase authentication is not configured.');
     }
     localStorage.removeItem('brain_demo_session');
+    localStorage.removeItem('brain_local_session');
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
   };
 
   const signInAsDemo = async () => {
     localStorage.setItem('brain_demo_session', 'true');
+    localStorage.removeItem('brain_local_session');
     setUser(DEMO_USER);
     setIsDemo(true);
   };
 
   const logout = async () => {
     localStorage.removeItem('brain_demo_session');
+    localStorage.removeItem('brain_local_session');
     if (auth && isFirebaseConfigured) {
       await firebaseSignOut(auth);
     }
