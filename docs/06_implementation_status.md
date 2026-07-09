@@ -78,24 +78,43 @@ npm run dev
 ```
 Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
-### Packaging as a Native Mobile App with Capacitor
-1. Install Capacitor CLI & Core packages:
+### Packaging as a Native Mobile App with Capacitor (Local Build)
+1. Install Capacitor packages:
    ```bash
-   npm install @capacitor/core @capacitor/cli
+   npm install @capacitor/core @capacitor/cli @capacitor/android
    ```
-2. Add native iOS or Android platforms:
+2. Generate the native Android workspace shell:
    ```bash
    npx cap add android
-   npx cap add ios
    ```
-3. Build web bundle & sync with Capacitor:
+3. Compile the production static Next.js export and synchronize web assets:
    ```bash
    npm run build
-   npx cap sync
+   npx cap sync android
    ```
-4. Open in Android Studio or Xcode:
+4. Build the `.apk` package directly from the command line:
+   ```bash
+   cd android
+   ./gradlew assembleDebug
+   # Output: android/app/build/outputs/apk/debug/app-debug.apk
+   ```
+5. Alternatively, open in Android Studio:
    ```bash
    npx cap open android
-   # or
-   npx cap open ios
+   # Build via menu: Build -> Build Bundle(s) / APK(s) -> Build APK(s)
    ```
+
+---
+
+## 4. Automated Cloud Releases (GitHub Actions)
+
+A fully automated cloud build pipeline is configured inside [`.github/workflows/build-apk.yml`](file:///E:/Projects/noteapp2/.github/workflows/build-apk.yml).
+
+Every commit pushed to the `main` branch automatically:
+1. Provisions an Ubuntu build environment with **Node.js 22** and **Java 21 (Temurin JDK)**.
+2. Resolves and installs Next.js and Capacitor runtime packages.
+3. Generates the optimized Next.js static production bundle (`out/`).
+4. Invokes the Capacitor CLI to compile the native Android Gradle project.
+5. Builds a standalone `.apk` using `gradlew assembleDebug`.
+6. Uploads and attaches the executable binary `BrainLibrary-v1.0.apk` directly to the repository's public GitHub Releases page:
+   👉 **[https://github.com/AliAhmedoo5/brainlibrary/releases](https://github.com/AliAhmedoo5/brainlibrary/releases)**

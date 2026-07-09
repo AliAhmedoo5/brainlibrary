@@ -178,3 +178,26 @@ service cloud.firestore {
   }
 }
 ```
+
+---
+
+## 6. Mobile & CI/CD Deployment Architecture
+
+Brain Library is compiled as an offline-first **Progressive Web App (PWA)** and pre-configured for native **Capacitor Mobile Packaging** with an automated **GitHub Actions CI/CD pipeline** to build standalone Android APK binaries.
+
+### PWA Manifest Configuration
+The application exposes a standard Web App Manifest (`src/app/manifest.ts`) compiled dynamically:
+- **Display Mode:** `standalone` (removes mobile browser navigation header and navigation chrome).
+- **Theme Color:** `#0A0D14` matching the dark mode background theme.
+- **Orientation:** Supports `any` rotation mode.
+- **Dynamic Routing:** Utilizes `export const dynamic = 'force-static'` for flawless static exporting.
+
+### GitHub Actions CI/CD Pipeline (`.github/workflows/build-apk.yml`)
+Whenever code is pushed to the `main` branch, a runner builds the Next.js static files, syncs them to the Android workspace, compiles a native Android debug APK, and attaches it as a GitHub Release:
+
+- **Node.js Environment:** Uses Node.js `22` (required by the latest Capacitor CLI).
+- **Java Platform:** JDK `21` (required by Capacitor Android compiler toolchains).
+- **Build Command:** Runs `npx next build` to output the `out/` directory, then `npx cap sync android` to copy assets.
+- **Gradle Compilation:** Calls `chmod +x ./gradlew && ./gradlew assembleDebug` in the `./android` workspace directory.
+- **Artifact Release:** Utilizes `softprops/action-gh-release@v2` to publish the build artifact named `BrainLibrary-v1.0.apk` directly to the repository's GitHub Releases page.
+
