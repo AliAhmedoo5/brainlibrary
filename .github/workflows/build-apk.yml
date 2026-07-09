@@ -1,13 +1,16 @@
-name: Build Android APK
+name: Build & Release Android APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  build:
-    name: Build APK
+  build-and-release:
+    name: Build & Release APK
     runs-on: ubuntu-latest
 
     steps:
@@ -38,8 +41,23 @@ jobs:
           chmod +x ./gradlew
           ./gradlew assembleDebug
 
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
+      - name: Rename APK for Release
+        run: |
+          mkdir -p release-apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk release-apk/BrainLibrary-v1.0.apk
+
+      - name: Publish Automatic GitHub Release with APK
+        uses: softprops/action-gh-release@v2
         with:
-          name: BrainLibrary-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          tag_name: v1.0-latest
+          name: "Brain Library Android App (APK)"
+          body: |
+            ## 📱 Brain Library Native Android App (V1.0)
+            Download and install **`BrainLibrary-v1.0.apk`** below directly onto your Android device!
+            
+            ### Installation Instructions:
+            1. Download `BrainLibrary-v1.0.apk` from Assets below.
+            2. Open on your Android phone and tap **Install**.
+          files: release-apk/BrainLibrary-v1.0.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
