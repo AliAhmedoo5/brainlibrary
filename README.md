@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Brain Library — Bilingual & Offline-First Note-Taking Web App
 
-## Getting Started
+Welcome to **Brain Library** — a high-end personal knowledge management and note-taking application designed with native bilingual support (English & Urdu RTL) and offline-first cloud synchronization.
 
-First, run the development server:
+## 📖 Senior Engineering Documentation Suite
 
-```bash
+All planning, architecture, flows, timeline, and QA documents are saved in the [`docs/`](file:///E:/Projects/noteapp2/docs) folder:
+
+| # | Document | File Link | Description |
+|---|---|---|---|
+| **01** | **Product Requirements Document (PRD)** | [`docs/01_prd.md`](file:///E:/Projects/noteapp2/docs/01_prd.md) | Personas, user stories, P0/P1/P2 feature matrix, KPIs & acceptance criteria |
+| **02** | **Technical Requirements Document (TRD)** | [`docs/02_trd.md`](file:///E:/Projects/noteapp2/docs/02_trd.md) | Next.js 15 App Router + Tailwind v4 + Firestore schema, security rules & Fuse.js architecture |
+| **03** | **User Flows & Screen Map** | [`docs/03_user_flows.md`](file:///E:/Projects/noteapp2/docs/03_user_flows.md) | Complete screen map and Mermaid flowcharts for Auth, Notes, RTL flip, Search & Trash |
+| **04** | **Project Implementation Plan** | [`docs/04_project_plan.md`](file:///E:/Projects/noteapp2/docs/04_project_plan.md) | Executable 8-phase implementation roadmap with dependency graph and time estimates |
+| **05** | **QA & Testing Plan** | [`docs/05_testing_plan.md`](file:///E:/Projects/noteapp2/docs/05_testing_plan.md) | Testing pyramid, unit/component/integration test cases & Playwright E2E scenario |
+| **06** | **Implementation & Build Status Report** | [`docs/06_implementation_status.md`](file:///E:/Projects/noteapp2/docs/06_implementation_status.md) | Completed V1 engineering summary, post-V1 roadmap, and build verification |
+
+---
+
+## 🚀 Running the Project Locally
+
+Start the Next.js development server:
+
+```powershell
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open **[http://localhost:3000](http://localhost:3000)** to experience the bilingual app in **Instant Demo Mode** (`demo_user_001`). No login required!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📱 Packaging as a Native Mobile App (Capacitor)
 
-## Learn More
+Brain Library is pre-configured for native mobile app generation using **Capacitor** ([`capacitor.config.ts`](file:///E:/Projects/noteapp2/capacitor.config.ts)):
 
-To learn more about Next.js, take a look at the following resources:
+```powershell
+# 1. Install Capacitor packages
+npm install @capacitor/core @capacitor/cli
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 2. Add Android or iOS native shell
+npx cap add android
+npx cap add ios
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# 3. Build & sync web assets
+npm run build
+npx cap sync
 
-## Deploy on Vercel
+# 4. Open in Android Studio or Xcode
+npx cap open android
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Tech Stack Overview
+- **Core**: Next.js 15 (App Router) + TypeScript + React 19
+- **Mobile Packaging**: Capacitor pre-configured (`capacitor.config.ts`) + Mobile touch-first responsive design
+- **Styling**: Tailwind CSS v4 (with native `rtl:` support & Dark/Light mode toggle)
+- **Backend & Auth**: Firebase Authentication + Cloud Firestore (with multi-tab IndexedDB offline persistence)
+- **Editor**: Tiptap Rich Text Editor (ProseMirror engine)
+- **Search Engine**: Client-side full-text search powered by `Fuse.js`
+- **Typography**: Inter (Latin) + Noto Nastaliq Urdu (Urdu script)
