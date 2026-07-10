@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-40 h-16 studio-surface border-b border-[var(--border-color)] px-4 sm:px-6 flex items-center justify-between gap-4 backdrop-blur-md">
       {/* Left side: Mobile menu & Search box */}
-      <div className="flex items-center gap-3 flex-1 max-w-xl">
+      <div className="flex items-center gap-2 sm:gap-3 flex-1 max-w-xl">
         <button
           type="button"
           onClick={onToggleSidebarMobile}
@@ -57,9 +57,20 @@ export const Header: React.FC<HeaderProps> = ({
           <Menu className="w-5 h-5" />
         </button>
 
+        {/* Search button for mobile */}
+        <button
+          type="button"
+          onClick={onOpenSearch}
+          className="sm:hidden p-2 rounded-xl text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] transition"
+          aria-label="Search"
+        >
+          <Search className="w-5 h-5 text-blue-500" />
+        </button>
+
+        {/* Search bar for desktop */}
         <div
           onClick={onOpenSearch}
-          className="flex-1 flex items-center justify-between bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] border border-[var(--border-color)] rounded-xl px-3.5 py-2 cursor-pointer transition group"
+          className="hidden sm:flex flex-1 items-center justify-between bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] border border-[var(--border-color)] rounded-xl px-3.5 py-2 cursor-pointer transition group"
         >
           <div className="flex items-center gap-2 text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]">
             <Search className="w-4 h-4 text-blue-500" />
@@ -72,12 +83,12 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Right side: New Note button, Language Toggle, Theme Toggle, Online Status, User */}
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
         {/* Quick New Note CTA */}
         <button
           type="button"
           onClick={onOpenNewNote}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition"
+          className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition"
         >
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">{dict.newNote}</span>
@@ -87,12 +98,11 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           type="button"
           onClick={toggleLocale}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] border border-[var(--border-color)] text-xs font-semibold text-[var(--text-primary)] transition"
+          className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] border border-[var(--border-color)] text-xs font-semibold text-[var(--text-primary)] transition"
           title={dict.toggleLocale}
         >
           <Globe className="w-4 h-4 text-blue-500" />
           <span className="hidden sm:inline">{locale === 'en' ? 'اردو RTL' : 'English LTR'}</span>
-          <span className="sm:hidden">{locale === 'en' ? 'اردو' : 'EN'}</span>
         </button>
 
         {/* Dark / Light Theme Toggle */}
