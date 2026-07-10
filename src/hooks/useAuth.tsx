@@ -48,6 +48,12 @@ export function formatAuthError(err: unknown): string {
   if (code.includes('auth/popup-closed-by-user') || code.includes('auth/cancelled-popup-request')) {
     return 'Google Sign-In popup was closed before completion. Please try again.';
   }
+  if (
+    code.includes('auth/popup-blocked') ||
+    code.includes('auth/operation-not-supported-in-this-environment')
+  ) {
+    return 'Google Sign-In popup is restricted in this mobile view. Please sign in using your Email & Password or continue in Offline Demo mode.';
+  }
   if (code.includes('auth/unauthorized-domain')) {
     return 'OAuth domain not authorized. Please add "localhost" to your Firebase Console under Authentication > Settings > Authorized domains.';
   }
@@ -166,35 +172,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('brain_demo_session');
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-
-    // In native Capacitor mobile WebViews or if popup fails, fallback to signInWithRedirect
-    const isCapacitorOrFile =
-      typeof window !== 'undefined' &&
-      (window.location.protocol === 'file:' ||
-        // @ts-expect-error Capacitor global check
-        Boolean(window.Capacitor));
-
-    if (isCapacitorOrFile) {
-      await signInWithRedirect(auth, provider);
-      return;
-    }
-
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (err: unknown) {
-      const code =
-        typeof err === 'object' && err !== null && 'code' in err
-          ? String((err as { code: unknown }).code)
-          : '';
-      if (
-        code.includes('auth/popup-blocked') ||
-        code.includes('auth/operation-not-supported-in-this-environment')
-      ) {
-        await signInWithRedirect(auth, provider);
-        return;
-      }
-      throw err;
-    }
+    await signInWithPopup(auth, provider);
   };
 
   const signInAsDemo = async () => {
