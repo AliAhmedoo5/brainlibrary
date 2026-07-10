@@ -169,6 +169,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!auth || !isFirebaseConfigured) {
       throw new Error('Firebase authentication is not configured.');
     }
+    const isNativeApp =
+      typeof window !== 'undefined' &&
+      (window.location.protocol === 'file:' ||
+        // @ts-expect-error Capacitor check
+        Boolean(window.Capacitor?.isNativePlatform?.() || window.Capacitor));
+
+    if (isNativeApp) {
+      throw new Error(
+        'Google Web OAuth is only available on our Web App. Inside the Android APK, please Sign In or Create an Account with your Email & Password above (it syncs with the same cloud library!) or Continue as Demo.'
+      );
+    }
+
     localStorage.removeItem('brain_demo_session');
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
