@@ -5,6 +5,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   signOut as firebaseSignOut,
   onAuthStateChanged,
@@ -47,7 +49,7 @@ export function formatAuthError(err: unknown): string {
     return 'Google Sign-In popup was closed before completion. Please try again.';
   }
   if (code.includes('auth/unauthorized-domain')) {
-    return 'This domain is not authorized for OAuth in Firebase Console. Please add this domain under Authentication > Authorized domains.';
+    return 'OAuth domain not authorized. Please add "localhost" to your Firebase Console under Authentication > Settings > Authorized domains.';
   }
   if (
     code.includes('auth/invalid-credential') ||
@@ -85,6 +87,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (auth && isFirebaseConfigured) {
       try {
+        getRedirectResult(auth).catch((err) => {
+          console.warn('Google redirect result warning:', err);
+        });
+
         const unsubscribe = onAuthStateChanged(
           auth,
           (fbUser: FirebaseUser | null) => {
@@ -159,7 +165,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     localStorage.removeItem('brain_demo_session');
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    provider.setCustomParameters({ prompt: 'select_account' });
+
+    // In native Capacitor mobile WebViews or if popup fails, fallback to signInWithRedirect
+    const isCapacitorOrFile =
+      typeof window !== 'undefined' &&
+      (window.location.protocol === 'file:' ||
+        // @ts-expect-error Capacitor global check
+        Boolean(window.Capacitor));
+
+    if (isCapacitorOrFile) {
+      await signInWithRedirect(auth, provider);
+      return;
+    }
+
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (err: unknown) {
+      const code =
+        typeof err === 'object' && err !== null && 'code' in err
+          ? String((err as { code: unknown }).code)
+          : '';
+      if (
+        code.includes('auth/popup-blocked') ||
+        code.includes('auth/operation-not-supported-in-this-environment')
+      ) {
+        await signInWithRedirect(auth, provider);
+        return;
+      }
+      throw err;
+    }
   };
 
   const signInAsDemo = async () => {
