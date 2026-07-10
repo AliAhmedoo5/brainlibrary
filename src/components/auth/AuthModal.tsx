@@ -67,18 +67,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-fadeIn">
-      <div className="glass-panel w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/10">
-        <div className="flex items-center justify-between pb-4 border-b border-white/10">
+      <div className="glass-panel w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border border-[var(--border-color)]">
+        <div className="flex items-center justify-between pb-4 border-b border-[var(--border-color)]">
           <div>
-            <h3 className="text-xl font-bold text-white">
+            <h3 className="text-xl font-bold text-[var(--text-primary)]">
               {isSignUp ? dict.createAccount : dict.welcomeBack}
             </h3>
-            <p className="text-xs text-gray-400 mt-1">{dict.authSubtitle}</p>
+            <p className="text-xs text-[var(--text-secondary)] mt-1">{dict.authSubtitle}</p>
           </div>
           <button
             onClick={onClose}
             disabled={isBusy}
-            className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition"
+            className="p-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -103,7 +103,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           {isSignUp && (
             <div>
-              <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1.5">
                 Full Name
               </label>
               <input
@@ -113,17 +113,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Hamza (Researcher)"
-                className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition disabled:opacity-50"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--bg-canvas)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-blue-500 transition disabled:opacity-50"
               />
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1.5">
               {dict.emailLabel}
             </label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-3 w-4 h-4 text-gray-400" />
+              <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[var(--text-muted)]" />
               <input
                 type="email"
                 required
@@ -131,17 +131,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition disabled:opacity-50"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[var(--bg-canvas)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-blue-500 transition disabled:opacity-50"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1.5">
               {dict.passwordLabel}
             </label>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-3 w-4 h-4 text-gray-400" />
+              <Lock className="absolute left-3.5 top-3.5 w-4 h-4 text-[var(--text-muted)]" />
               <input
                 type="password"
                 required
@@ -149,7 +149,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition disabled:opacity-50"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[var(--bg-canvas)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-blue-500 transition disabled:opacity-50"
               />
             </div>
           </div>
@@ -171,9 +171,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         </form>
 
         <div className="my-5 flex items-center">
-          <div className="flex-1 h-px bg-white/10" />
-          <span className="px-3 text-xs text-gray-400 uppercase">OR</span>
-          <div className="flex-1 h-px bg-white/10" />
+          <div className="flex-1 h-px bg-[var(--border-color)]" />
+          <span className="px-3 text-xs text-[var(--text-secondary)] uppercase">OR</span>
+          <div className="flex-1 h-px bg-[var(--border-color)]" />
         </div>
 
         <div className="space-y-3">
@@ -181,7 +181,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             type="button"
             disabled={isBusy}
             onClick={handleGoogleAuth}
-            className="w-full py-2.5 rounded-xl text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-white transition disabled:opacity-50 flex items-center justify-center gap-2.5"
+            className="w-full py-2.5 rounded-xl text-sm font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] border border-[var(--border-color)] text-[var(--text-primary)] transition disabled:opacity-50 flex items-center justify-center gap-2.5"
           >
             {googleLoading ? (
               <>
@@ -220,14 +220,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               await signInAsDemo();
               onClose();
             }}
-            className="w-full py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-emerald-600/20 to-teal-600/20 hover:from-emerald-600/30 hover:to-teal-600/30 border border-emerald-500/30 text-emerald-300 transition disabled:opacity-50 flex items-center justify-center gap-2"
+            className="w-full py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-emerald-600/20 to-teal-600/20 hover:from-emerald-600/30 hover:to-teal-600/30 border border-emerald-500/30 text-emerald-500 dark:text-emerald-300 transition disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            <Sparkles className="w-4 h-4 text-emerald-400" />
+            <Sparkles className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
             <span>{dict.continueAsDemo}</span>
           </button>
         </div>
 
-        <div className="mt-6 text-center text-xs text-gray-400">
+        <div className="mt-6 text-center text-xs text-[var(--text-secondary)]">
           <span>{isSignUp ? dict.haveAccountPrompt : dict.noAccountPrompt} </span>
           <button
             type="button"
@@ -236,7 +236,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               setError('');
               setSuccess('');
             }}
-            className="text-blue-400 font-semibold hover:underline"
+            className="text-blue-500 dark:text-blue-400 font-semibold hover:underline"
           >
             {isSignUp ? dict.signIn : dict.signUp}
           </button>

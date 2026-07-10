@@ -23,15 +23,15 @@ export const ShortcutsModal: React.FC<ShortcutsModalProps> = ({ isOpen, onClose 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
-      <div className="glass-panel w-full max-w-md rounded-2xl p-6 shadow-2xl border border-white/10">
-        <div className="flex items-center justify-between pb-4 border-b border-white/10">
-          <div className="flex items-center gap-2 text-white font-semibold">
+      <div className="glass-panel w-full max-w-md rounded-2xl p-6 shadow-2xl border border-[var(--border-color)]">
+        <div className="flex items-center justify-between pb-4 border-b border-[var(--border-color)]">
+          <div className="flex items-center gap-2 text-[var(--text-primary)] font-semibold">
             <Keyboard className="w-5 h-5 text-blue-400" />
             <span>{dict.shortcutsModalTitle}</span>
           </div>
           <button
             onClick={onClose}
-            className="p-1 text-gray-400 hover:text-white transition"
+            className="p-1 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -41,14 +41,14 @@ export const ShortcutsModal: React.FC<ShortcutsModalProps> = ({ isOpen, onClose 
           {shortcuts.map((s, idx) => (
             <div
               key={idx}
-              className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5"
+              className="flex items-center justify-between p-3 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-color)]"
             >
-              <span className="text-sm text-gray-300">{s.label}</span>
+              <span className="text-sm text-[var(--text-secondary)]">{s.label}</span>
               <div className="flex items-center gap-1">
                 {s.keys.map((k, i) => (
                   <kbd
                     key={i}
-                    className="px-2 py-1 rounded bg-white/10 border border-white/20 text-xs font-mono text-white"
+                    className="px-2 py-1 rounded bg-[var(--bg-canvas)] border border-[var(--border-strong)] text-xs font-mono text-[var(--text-primary)]"
                   >
                     {k}
                   </kbd>

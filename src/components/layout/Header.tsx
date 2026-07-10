@@ -91,7 +91,8 @@ export const Header: React.FC<HeaderProps> = ({
           title={dict.toggleLocale}
         >
           <Globe className="w-4 h-4 text-blue-500" />
-          <span>{locale === 'en' ? 'اردو RTL' : 'English LTR'}</span>
+          <span className="hidden sm:inline">{locale === 'en' ? 'اردو RTL' : 'English LTR'}</span>
+          <span className="sm:hidden">{locale === 'en' ? 'اردو' : 'EN'}</span>
         </button>
 
         {/* Dark / Light Theme Toggle */}
@@ -125,7 +126,7 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* User Profile / Logout */}
         {user ? (
-          <div className="flex items-center gap-2 pl-2 border-l border-[var(--border-color)]">
+          <div className="flex items-center gap-2 ps-2 border-s border-[var(--border-color)]">
             <div className="hidden xl:flex flex-col text-right">
               <span className="text-xs font-semibold text-[var(--text-primary)] leading-tight truncate max-w-[120px]">
                 {user.displayName}

@@ -188,7 +188,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 xl:w-72 h-screen shrink-0 studio-surface border-r border-[var(--border-color)]">
+      <aside className="hidden lg:flex flex-col w-64 xl:w-72 h-screen shrink-0 studio-surface border-e border-[var(--border-color)]">
         {sidebarContent}
       </aside>
 
@@ -202,8 +202,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Mobile Drawer Panel */}
       <aside
-        className={`lg:hidden fixed top-0 bottom-0 z-50 w-72 studio-surface border-r border-[var(--border-color)] transition-transform duration-300 ease-in-out ${
-          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`lg:hidden fixed top-0 bottom-0 start-0 z-50 w-72 studio-surface border-e border-[var(--border-color)] transition-transform duration-300 ease-in-out ${
+          mobileOpen ? 'translate-x-0' : 'ltr:-translate-x-full rtl:translate-x-full'
         }`}
       >
         {sidebarContent}

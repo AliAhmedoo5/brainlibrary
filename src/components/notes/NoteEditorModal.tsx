@@ -200,8 +200,8 @@ export const NoteEditorModal: React.FC<NoteEditorModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-2 sm:p-6 animate-fadeIn">
-      <div className="studio-surface w-full max-w-4xl h-[95vh] sm:h-[90vh] flex flex-col rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-[var(--border-color)]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md sm:p-6 animate-fadeIn">
+      <div className="studio-surface w-full h-full sm:h-[90vh] sm:max-w-4xl flex flex-col rounded-none sm:rounded-3xl shadow-2xl overflow-hidden border-0 sm:border border-[var(--border-color)]">
         {/* Header bar */}
         <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-[var(--bg-subtle)] border-b border-[var(--border-color)]">
           <div className="flex items-center gap-3">
@@ -402,8 +402,8 @@ export const NoteEditorModal: React.FC<NoteEditorModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 bg-white/5 border-t border-white/10 flex items-center justify-between">
-          <span className="text-xs text-gray-400">
+        <div className="px-6 py-4 bg-[var(--bg-subtle)] border-t border-[var(--border-color)] flex items-center justify-between">
+          <span className="text-xs text-[var(--text-secondary)]">
             {locale === 'ur'
               ? 'اردو نستعلیق ٹائپوگرافی فعال ہے'
               : 'Auto-saving enabled • Multi-tab offline storage'}

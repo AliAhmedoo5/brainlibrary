@@ -28,13 +28,13 @@ export const TrashView: React.FC<TrashViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Banner */}
-      <div className="glass-panel rounded-2xl p-6 border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="glass-panel rounded-2xl p-6 border border-[var(--border-color)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Trash2 className="w-5 h-5 text-red-400" />
             <span>{dict.trashTitle}</span>
           </h2>
-          <p className="text-xs text-gray-400 mt-1">{dict.trashSubtitle}</p>
+          <p className="text-xs text-[var(--text-secondary)] mt-1">{dict.trashSubtitle}</p>
         </div>
 
         {trashedNotes.length > 0 && (
@@ -55,7 +55,7 @@ export const TrashView: React.FC<TrashViewProps> = ({
                 </button>
                 <button
                   onClick={() => setConfirmEmpty(false)}
-                  className="px-2 py-1 rounded-lg text-xs text-gray-400 hover:text-white"
+                  className="px-2 py-1 rounded-lg text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 >
                   Cancel
                 </button>
@@ -75,10 +75,10 @@ export const TrashView: React.FC<TrashViewProps> = ({
 
       {/* Trashed Notes Grid */}
       {trashedNotes.length === 0 ? (
-        <div className="glass-panel rounded-3xl p-12 text-center border border-white/10">
+        <div className="glass-panel rounded-3xl p-12 text-center border border-[var(--border-color)]">
           <Trash2 className="w-16 h-16 mx-auto mb-4 text-red-400 opacity-20" />
-          <h3 className="text-lg font-bold text-white">{dict.emptyTrashTitle}</h3>
-          <p className="text-xs text-gray-400 mt-1">{dict.emptyTrashSubtitle}</p>
+          <h3 className="text-lg font-bold text-[var(--text-primary)]">{dict.emptyTrashTitle}</h3>
+          <p className="text-xs text-[var(--text-muted)] mt-1">{dict.emptyTrashSubtitle}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

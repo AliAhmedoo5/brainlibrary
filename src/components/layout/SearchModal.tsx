@@ -48,30 +48,30 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 px-4 bg-black/70 backdrop-blur-md animate-fadeIn">
-      <div className="glass-panel w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-white/10 flex flex-col max-h-[75vh]">
+      <div className="glass-panel w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-[var(--border-color)] flex flex-col max-h-[75vh]">
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3 border-b border-white/10 bg-white/5">
-          <Search className="w-5 h-5 text-blue-400 mr-3" />
+        <div className="flex items-center px-4 py-3 border-b border-[var(--border-color)] bg-[var(--bg-subtle)]">
+          <Search className="w-5 h-5 text-blue-400 me-3" />
           <input
             type="text"
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={dict.searchPlaceholder}
-            className="w-full bg-transparent text-white placeholder-gray-400 text-sm sm:text-base focus:outline-none"
+            className="w-full bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm sm:text-base focus:outline-none"
             dir="auto"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="p-1 text-gray-400 hover:text-white"
+              className="p-1 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             >
               <X className="w-4 h-4" />
             </button>
           )}
           <button
             onClick={onClose}
-            className="ml-3 px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/10 text-gray-300 hover:bg-white/20 transition"
+            className="ms-3 px-2.5 py-1 rounded-lg text-xs font-semibold bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle-hover)] hover:text-[var(--text-primary)] transition"
           >
             ESC
           </button>
@@ -80,10 +80,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         {/* Search Results Feed */}
         <div className="flex-1 overflow-y-auto p-3 space-y-2">
           {results.length === 0 ? (
-            <div className="py-12 text-center text-gray-400">
+            <div className="py-12 text-center text-[var(--text-secondary)]">
               <FileText className="w-12 h-12 mx-auto mb-3 opacity-30 text-blue-400" />
-              <p className="font-semibold text-white">{dict.noSearchResultsTitle}</p>
-              <p className="text-xs text-gray-400 mt-1">{dict.noSearchResultsSubtitle}</p>
+              <p className="font-semibold text-[var(--text-primary)]">{dict.noSearchResultsTitle}</p>
+              <p className="text-xs text-[var(--text-muted)] mt-1">{dict.noSearchResultsSubtitle}</p>
             </div>
           ) : (
             results.map((note) => (
@@ -93,28 +93,28 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   onSelectNote(note);
                   onClose();
                 }}
-                className="flex items-start justify-between p-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-blue-500/40 cursor-pointer transition group"
+                className="flex items-start justify-between p-3.5 rounded-xl bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] border border-[var(--border-color)] hover:border-blue-500/40 cursor-pointer transition group"
               >
-                <div className="flex-1 pr-4">
+                <div className="flex-1 pe-4">
                   <div className="flex items-center gap-2 mb-1">
                     <span
                       className="w-2.5 h-2.5 rounded-full"
                       style={{ backgroundColor: note.color || '#3B82F6' }}
                     />
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-[var(--text-secondary)]">
                       {getCategoryName(note.categoryId)}
                     </span>
                   </div>
 
                   <h4
-                    className="font-semibold text-sm text-white group-hover:text-blue-300 transition"
+                    className="font-semibold text-sm text-[var(--text-primary)] group-hover:text-blue-500 transition"
                     dir="auto"
                   >
                     {note.title || 'Untitled Note'}
                   </h4>
 
                   <p
-                    className="text-xs text-gray-400 line-clamp-1 mt-1"
+                    className="text-xs text-[var(--text-secondary)] line-clamp-1 mt-1"
                     dir="auto"
                   >
                     {note.plainTextContent.replace(note.title, '').trim()}
