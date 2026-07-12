@@ -31,7 +31,7 @@ Created all five core project engineering specifications under `docs/`:
 - Seeded instant **Demo Mode (`demo_user_001`)** with bilingual starter notes and categories so users can test all features immediately without registering.
 
 ### Phase 4: Hooks & Search Singleton
-- Created `src/hooks/useAuth.tsx` supporting Email/Password Auth, Google OAuth, and Instant Demo session management.
+- Created `src/hooks/useAuth.tsx` supporting Email/Password Auth and Instant Demo session management.
 - Created `src/hooks/useNotes.ts` and `src/hooks/useCategories.ts` for reactive state subscription across components.
 - Created `src/lib/search.ts` singleton index powered by **Fuse.js**, automatically re-indexing note titles, plaintext bodies, and tags on changes.
 

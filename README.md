@@ -14,6 +14,7 @@ All planning, architecture, flows, timeline, and QA documents are saved in the [
 | **04** | **Project Implementation Plan** | [`docs/04_project_plan.md`](file:///E:/Projects/noteapp2/docs/04_project_plan.md) | Executable 8-phase implementation roadmap with dependency graph and time estimates |
 | **05** | **QA & Testing Plan** | [`docs/05_testing_plan.md`](file:///E:/Projects/noteapp2/docs/05_testing_plan.md) | Testing pyramid, unit/component/integration test cases & Playwright E2E scenario |
 | **06** | **Implementation & Build Status Report** | [`docs/06_implementation_status.md`](file:///E:/Projects/noteapp2/docs/06_implementation_status.md) | Completed V1 engineering summary, post-V1 roadmap, and build verification |
+| **07** | **UX Psychology Audit Report** | [`docs/07_ux_psychology_audit.md`](file:///E:/Projects/noteapp2/docs/07_ux_psychology_audit.md) | Audit against the 6 core UX psychology principles (Decision Fatigue, Endowed Progress, Reciprocity, IKEA Effect, Anchoring, Loss Aversion) |
 
 ---
 

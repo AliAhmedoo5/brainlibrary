@@ -29,8 +29,11 @@ export const metadata: Metadata = {
   title: 'Brain Library — Bilingual Knowledge Management',
   description: 'High-end personal knowledge management and note-taking web app with offline-first cloud synchronization and native Urdu RTL support.',
   icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
+    icon: [
+      { url: '/logo.svg', type: 'image/svg+xml' },
+      { url: '/favicon.svg', type: 'image/svg+xml' }
+    ],
+    shortcut: '/logo.svg',
     apple: '/icon-192.svg'
   },
   appleWebApp: {

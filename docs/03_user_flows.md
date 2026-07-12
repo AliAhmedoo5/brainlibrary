@@ -29,19 +29,16 @@ flowchart TD
   CHECK -->|No| LOGIN_PAGE[Show /login Page]
   
   LOGIN_PAGE --> CHOICE{Sign-in Method}
-  CHOICE -->|Google OAuth| GOOGLE[Open Google Popup]
+  CHOICE -->|Instant Demo| DEMO[Initialize Demo Session]
   CHOICE -->|Email / Password| FORM[Fill Email & Password]
   
-  GOOGLE --> VERIFY_G{Success?}
+  DEMO --> REDIRECT([Redirect to Main Dashboard])
   FORM --> VERIFY_E{Valid Credentials?}
   
-  VERIFY_G -->|No| ERR[Show Toast Error] --> LOGIN_PAGE
-  VERIFY_E -->|No| ERR
+  VERIFY_E -->|No| ERR[Show Toast Error] --> LOGIN_PAGE
+  VERIFY_E -->|Yes| CREATE_DOC[Ensure Firestore /users doc exists]
   
-  VERIFY_G -->|Yes| CREATE_DOC[Ensure Firestore /users doc exists]
-  VERIFY_E -->|Yes| CREATE_DOC
-  
-  CREATE_DOC --> REDIRECT([Redirect to Main Dashboard])
+  CREATE_DOC --> REDIRECT
 ```
 
 ---

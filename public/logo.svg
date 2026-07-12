@@ -15,9 +15,11 @@
     </filter>
   </defs>
 
+  <!-- Background squircle -->
   <rect width="64" height="64" rx="18" fill="url(#bgGrad)"/>
   <rect x="1.5" y="1.5" width="61" height="61" rx="16.5" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
 
+  <!-- Neural synapses / sparks above the open book -->
   <path d="M32 15V23" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" opacity="0.9"/>
   <circle cx="32" cy="13" r="2.5" fill="#FFFFFF" filter="url(#glow)"/>
 
@@ -27,10 +29,13 @@
   <path d="M42 19L37 24" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
   <circle cx="44" cy="17" r="2" fill="#BAE6FD"/>
 
+  <!-- Open Book Pages with subtle depth -->
   <path d="M32 25C26 23.5 17 24.5 13 26.5V47.5C17 45.5 26 44.5 32 46.5C38 44.5 47 45.5 51 47.5V26.5C47 24.5 38 23.5 32 25Z" fill="url(#bookGrad)" stroke="#FFFFFF" stroke-width="2.2" stroke-linejoin="round"/>
   
+  <!-- Spine -->
   <path d="M32 25V46.5" stroke="#0284C7" stroke-width="2.2" stroke-linecap="round"/>
 
+  <!-- Page details (lines) -->
   <path d="M18 32C22 31.2 26 31.5 28 32.2" stroke="#0284C7" stroke-width="1.5" stroke-linecap="round" opacity="0.65"/>
   <path d="M18 37C22 36.2 26 36.5 28 37.2" stroke="#0284C7" stroke-width="1.5" stroke-linecap="round" opacity="0.65"/>
   <path d="M46 32C42 31.2 38 31.5 36 32.2" stroke="#0284C7" stroke-width="1.5" stroke-linecap="round" opacity="0.65"/>

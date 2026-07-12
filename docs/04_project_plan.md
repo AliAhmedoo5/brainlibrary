@@ -29,7 +29,7 @@ graph TD
 ### Phase 1: Authentication & User Profiles (Est: 6 Hours)
 - [ ] Build `AuthContext` provider with Firebase Auth listener.
 - [ ] Create `/login` and `/signup` responsive pages.
-- [ ] Implement Email/Password registration and Google Sign-In OAuth popup.
+- [ ] Implement Email/Password registration and Instant Demo Mode session handling.
 - [ ] Automatically initialize user profile document in Firestore upon signup.
 
 ### Phase 2: Shell Layout, i18n & Theme Toggles (Est: 6 Hours)

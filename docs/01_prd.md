@@ -61,7 +61,7 @@ mindmap
 ### P0 (Must-Have for V1 Launch)
 1. **Authentication**:
    - Email/Password sign-up and sign-in.
-   - Google Sign-In OAuth popup integration.
+   - Instant Demo Mode for one-click instant exploration.
    - Session persistence and protected application routes.
 2. **Category Management (Sections)**:
    - Create, edit, and delete categories.
@@ -102,7 +102,7 @@ mindmap
 | ID | Feature | User Story | Acceptance Criteria |
 | :--- | :--- | :--- | :--- |
 | **US-01** | Auth | As a new user, I want to sign up with Email/Password so I can create my private brain library. | **Given** unauthenticated user on `/signup`<br>**When** valid email and matching passwords are submitted<br>**Then** create Firebase Auth user, initialize user profile doc in Firestore, and redirect to `/dashboard`. |
-| **US-02** | Auth | As a user, I want to sign in with Google so I can log in with one click. | **Given** unauthenticated user on `/login`<br>**When** clicking "Continue with Google"<br>**Then** open OAuth popup, authenticate, and redirect to `/dashboard`. |
+| **US-02** | Auth | As a user, I want to explore the app instantly in Demo Mode without registering. | **Given** unauthenticated user on `/login`<br>**When** clicking "Continue as Demo"<br>**Then** initialize demo session (`demo_user_001`) and redirect to `/`. |
 | **US-03** | Categories | As a user, I want to create a new category with a name, color, and emoji. | **Given** user on dashboard<br>**When** clicking "+ Category" and saving `Name: "Work"`, `Color: "#10B981"`, `Emoji: "💼"`<br>**Then** persist category to Firestore and display in sidebar immediately. |
 | **US-04** | Categories | As a user, I want to filter my notes by clicking a category in the sidebar. | **Given** sidebar with multiple categories<br>**When** clicking on "Work"<br>**Then** update active filter state and display only notes where `categoryId == workCatId`. |
 | **US-05** | Notes | As a user, I want to create a rich text note under a specific category. | **Given** active category selected<br>**When** typing title and formatting text with headings/bold/lists<br>**Then** auto-save note doc to Firestore with structured Tiptap JSON and plain text preview. |

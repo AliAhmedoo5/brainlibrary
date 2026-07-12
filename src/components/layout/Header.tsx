@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocale } from '@/lib/i18n/LocaleContext';
 import { useAuth } from '@/hooks/useAuth';
+import { AppLogoIcon } from '@/components/ui/AppLogoIcon';
 import {
   Search,
   Sun,
@@ -56,6 +57,8 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Menu className="w-5 h-5" />
         </button>
+
+        <AppLogoIcon className="w-8 h-8 lg:hidden shrink-0" />
 
         {/* Search button for mobile */}
         <button

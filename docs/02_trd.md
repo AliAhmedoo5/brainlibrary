@@ -34,7 +34,7 @@ graph TD
 | **Framework** | Next.js 15 (App Router) + TypeScript | Modern routing, clean folder structure, strict type safety. |
 | **Styling** | Tailwind CSS v4 | Rapid responsive styling with native `rtl:` CSS variant support. |
 | **Database & Offline** | Firebase Cloud Firestore | Multi-tab IndexedDB persistence out-of-the-box. |
-| **Authentication** | Firebase Authentication | Secure Email/Password + Google OAuth JWT identity providers. |
+| **Authentication** | Firebase Authentication | Secure Email/Password + Instant Demo Mode session support. |
 | **Editor Engine** | Tiptap (ProseMirror core) | Headless rich text editor with flawless RTL/Urdu text support. |
 | **Search Engine** | Fuse.js (v7.x) | Zero-latency client-side fuzzy search across memory index. |
 
