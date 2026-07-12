@@ -18,7 +18,8 @@ import {
   Cloud,
   CheckCircle2,
   Tag as TagIcon,
-  Palette
+  Palette,
+  SlidersHorizontal
 } from 'lucide-react';
 
 interface NoteEditorModalProps {
@@ -58,6 +59,8 @@ export const NoteEditorModal: React.FC<NoteEditorModalProps> = ({
   const [tagInput, setTagInput] = useState('');
   const [isPinned, setIsPinned] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving'>('saved');
+  const [showOptions, setShowOptions] = useState(false);
+  const [showExportMenu, setShowExportMenu] = useState(false);
 
   const editor = useEditor({
     extensions: [
@@ -203,7 +206,7 @@ export const NoteEditorModal: React.FC<NoteEditorModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md sm:p-6 animate-fadeIn">
       <div className="studio-surface w-full h-full sm:h-[90vh] sm:max-w-4xl flex flex-col rounded-none sm:rounded-3xl shadow-2xl overflow-hidden border-0 sm:border border-[var(--border-color)]">
         {/* Header bar */}
-        <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-[var(--bg-subtle)] border-b border-[var(--border-color)]">
+        <div className="flex items-center justify-between px-3 sm:px-6 py-2 sm:py-3.5 bg-[var(--bg-subtle)] border-b border-[var(--border-color)] shrink-0">
           <div className="flex items-center gap-3">
             <span
               className="w-4 h-4 rounded-full"
@@ -241,39 +244,65 @@ export const NoteEditorModal: React.FC<NoteEditorModalProps> = ({
               {isPinned ? <Pin className="w-4 h-4 fill-current" /> : <PinOff className="w-4 h-4" />}
             </button>
 
-            {/* Export dropdown menu */}
-            <div className="relative group">
-              <button
-                type="button"
-                className="p-2 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)] hover:text-[var(--text-primary)] transition flex items-center gap-1"
-                title={dict.exportNote}
-              >
-                <Download className="w-4 h-4" />
-              </button>
-              <div className="absolute right-0 mt-1 hidden group-hover:block w-48 py-2 studio-surface rounded-xl shadow-xl z-20 border border-[var(--border-color)] text-sm">
+            {/* Export dropdown menu (Temporarily disabled per user request) */}
+            {false && (
+              <div className="relative group">
                 <button
                   type="button"
-                  onClick={() => handleExport('md')}
-                  className="w-full text-left px-4 py-2 hover:bg-[var(--bg-subtle)] transition text-[var(--text-primary)]"
+                  onClick={() => setShowExportMenu(!showExportMenu)}
+                  className="p-1.5 sm:p-2 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)] hover:text-[var(--text-primary)] transition flex items-center gap-1"
+                  title={dict.exportNote}
                 >
-                  {dict.exportMarkdown}
+                  <Download className="w-4 h-4" />
                 </button>
-                <button
-                  type="button"
-                  onClick={() => handleExport('json')}
-                  className="w-full text-left px-4 py-2 hover:bg-[var(--bg-subtle)] transition text-[var(--text-primary)]"
-                >
-                  {dict.exportJson}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleExport('txt')}
-                  className="w-full text-left px-4 py-2 hover:bg-[var(--bg-subtle)] transition text-[var(--text-primary)]"
-                >
-                  {dict.exportText}
-                </button>
+                <div className={`absolute right-0 mt-1 ${showExportMenu ? 'block' : 'hidden group-hover:block'} w-48 py-2 studio-surface rounded-xl shadow-xl z-20 border border-[var(--border-color)] text-sm`}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleExport('md');
+                      setShowExportMenu(false);
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-[var(--bg-subtle)] transition text-[var(--text-primary)]"
+                  >
+                    {dict.exportMarkdown}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleExport('json');
+                      setShowExportMenu(false);
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-[var(--bg-subtle)] transition text-[var(--text-primary)]"
+                  >
+                    {dict.exportJson}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleExport('txt');
+                      setShowExportMenu(false);
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-[var(--bg-subtle)] transition text-[var(--text-primary)]"
+                  >
+                    {dict.exportText}
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Mobile Options Toggle */}
+            <button
+              type="button"
+              onClick={() => setShowOptions(!showOptions)}
+              className={`sm:hidden p-1.5 rounded-xl transition ${
+                showOptions
+                  ? 'bg-blue-500/20 text-blue-500 border border-blue-500/40'
+                  : 'text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]'
+              }`}
+              title="Toggle Note Options"
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+            </button>
 
             {note && onTrash && (
               <button
@@ -282,12 +311,24 @@ export const NoteEditorModal: React.FC<NoteEditorModalProps> = ({
                   onTrash(note);
                   onClose();
                 }}
-                className="p-2 rounded-xl text-red-500 hover:bg-red-500/20 transition"
+                className="p-1.5 sm:p-2 rounded-xl text-red-500 hover:bg-red-500/20 transition"
                 title={dict.moveToTrash}
               >
                 <Trash2 className="w-4 h-4" />
               </button>
             )}
+
+            {/* Done / Save button in Top Bar for instant access */}
+            <button
+              type="button"
+              onClick={() => {
+                handleSaveNote();
+                onClose();
+              }}
+              className="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-500 hover:to-indigo-500 shadow transition shrink-0"
+            >
+              {dict.saved} / Done
+            </button>
 
             <button
               type="button"
@@ -295,15 +336,15 @@ export const NoteEditorModal: React.FC<NoteEditorModalProps> = ({
                 handleSaveNote();
                 onClose();
               }}
-              className="p-2 rounded-xl text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] transition"
+              className="p-1.5 sm:p-2 rounded-xl text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] transition"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
-        {/* Metadata Controls */}
-        <div className="flex flex-wrap items-center gap-4 px-6 py-3 bg-[var(--bg-subtle)] border-b border-[var(--border-color)]">
+        {/* Metadata Controls (Hidden by default on mobile to maximize editor space) */}
+        <div className={`${showOptions ? 'flex' : 'hidden sm:flex'} flex-wrap items-center gap-4 px-4 sm:px-6 py-2 sm:py-3 bg-[var(--bg-subtle)] border-b border-[var(--border-color)] shrink-0`}>
           <div className="flex items-center gap-2">
             <span className="text-xs text-[var(--text-secondary)] font-medium">Category:</span>
             <select
@@ -349,7 +390,7 @@ export const NoteEditorModal: React.FC<NoteEditorModalProps> = ({
         </div>
 
         {/* Title Input */}
-        <div className="px-6 pt-5 pb-2">
+        <div className="px-4 sm:px-6 pt-2 sm:pt-4 pb-1 shrink-0">
           <input
             type="text"
             value={title}
@@ -364,7 +405,7 @@ export const NoteEditorModal: React.FC<NoteEditorModalProps> = ({
         </div>
 
         {/* Tags input */}
-        <div className="px-6 pb-3 flex flex-wrap items-center gap-2">
+        <div className="px-4 sm:px-6 pb-2 flex flex-wrap items-center gap-2 shrink-0">
           {tags.map((t) => (
             <span
               key={t}
@@ -392,17 +433,17 @@ export const NoteEditorModal: React.FC<NoteEditorModalProps> = ({
         </div>
 
         {/* Tiptap Toolbar */}
-        <div className="px-6">
+        <div className="px-2 sm:px-6 shrink-0">
           <TiptapToolbar editor={editor} />
         </div>
 
-        {/* Editor Content Area */}
-        <div className="flex-1 overflow-y-auto px-6 py-4 bg-[var(--bg-surface)]">
+        {/* Editor Content Area (Takes all remaining vertical space) */}
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-2 sm:py-4 bg-[var(--bg-surface)] min-h-[160px]">
           <EditorContent editor={editor} className="prose max-w-none text-[var(--text-primary)]" />
         </div>
 
-        {/* Footer */}
-        <div className="px-6 py-4 bg-[var(--bg-subtle)] border-t border-[var(--border-color)] flex items-center justify-between">
+        {/* Footer (Hidden on mobile since Done button is in Header bar) */}
+        <div className="hidden sm:flex px-6 py-4 bg-[var(--bg-subtle)] border-t border-[var(--border-color)] items-center justify-between shrink-0">
           <span className="text-xs text-[var(--text-secondary)]">
             {locale === 'ur'
               ? 'اردو نستعلیق ٹائپوگرافی فعال ہے'

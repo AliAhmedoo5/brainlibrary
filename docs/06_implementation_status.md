@@ -118,3 +118,18 @@ Every commit pushed to the `main` branch automatically:
 5. Builds a standalone `.apk` using `gradlew assembleDebug`.
 6. Uploads and attaches the executable binary `BrainLibrary-v1.0.apk` directly to the repository's public GitHub Releases page:
    👉 **[https://github.com/AliAhmedoo5/brainlibrary/releases](https://github.com/AliAhmedoo5/brainlibrary/releases)**
+
+---
+
+## 5. Mobile Editor UX & Feature Flags
+
+### Mobile Virtual Keyboard Ergonomics & Layout Optimization
+When running on physical mobile devices (Android WebView / Capacitor), virtual keyboards occupy approximately 50% of the screen height. To ensure a spacious, distraction-free typing area where users can clearly view preceding and following lines of text:
+- **Top-Bar Action Placement**: The primary **Done / Save** button is positioned directly inside the top header bar (`NoteEditorModal.tsx`), eliminating the need for a persistent bottom footer on mobile screens (`hidden sm:flex`).
+- **Collapsible Metadata Drawer**: Category selection and color accent swatches are hidden by default on mobile devices behind a toggle button (`SlidersHorizontal`), saving ~56px of vertical space.
+- **Single-Line Formatting Toolbar**: The Tiptap rich text toolbar (`TiptapToolbar.tsx`) uses a single-line horizontal-scrollable flex container (`flex-nowrap overflow-x-auto scrollbar-none`) rather than wrapping into multiple rows.
+- **Resulting Typing Space**: Frees up over **240px** of vertical editor height above the mobile virtual keyboard.
+
+### Export Note Feature Status
+- **Implementation**: Full client-side export functionality for Markdown (`.md`), JSON (`.json`), and Plain Text (`.txt`) is built into `NoteEditorModal.tsx`.
+- **Current Status**: The Export dropdown button (`Download` icon) is temporarily disabled and hidden per user request via code guard (`{false && ...}`) while preserving the underlying export logic and translation keys for future re-activation.

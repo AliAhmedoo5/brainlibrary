@@ -26,14 +26,14 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({ editor }) => {
   }
 
   const btnClass = (active: boolean) =>
-    `p-2 rounded-lg transition text-sm flex items-center justify-center ${
+    `p-1.5 sm:p-2 rounded-lg transition text-sm flex items-center justify-center shrink-0 ${
       active
         ? 'bg-blue-600 text-white shadow-md'
         : 'text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)] hover:text-[var(--text-primary)]'
     }`;
 
   return (
-    <div className="flex items-center flex-wrap gap-1 p-2 bg-[var(--bg-subtle)] border-b border-[var(--border-color)] rounded-t-2xl">
+    <div className="flex items-center flex-nowrap overflow-x-auto gap-1 p-1.5 sm:p-2 bg-[var(--bg-subtle)] border-b border-[var(--border-color)] rounded-t-xl sm:rounded-t-2xl scrollbar-none">
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
@@ -59,7 +59,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({ editor }) => {
         <Strikethrough className="w-4 h-4" />
       </button>
 
-      <div className="w-px h-6 bg-[var(--border-color)] mx-1" />
+      <div className="w-px h-5 sm:h-6 bg-[var(--border-color)] mx-1 shrink-0" />
 
       <button
         type="button"
@@ -86,7 +86,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({ editor }) => {
         <Heading3 className="w-4 h-4" />
       </button>
 
-      <div className="w-px h-6 bg-[var(--border-color)] mx-1" />
+      <div className="w-px h-5 sm:h-6 bg-[var(--border-color)] mx-1 shrink-0" />
 
       <button
         type="button"
@@ -105,7 +105,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({ editor }) => {
         <ListOrdered className="w-4 h-4" />
       </button>
 
-      <div className="w-px h-6 bg-[var(--border-color)] mx-1" />
+      <div className="w-px h-5 sm:h-6 bg-[var(--border-color)] mx-1 shrink-0" />
 
       <button
         type="button"
@@ -122,7 +122,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({ editor }) => {
         type="button"
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().undo()}
-        className="p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] disabled:opacity-30 transition"
+        className="p-1.5 sm:p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] disabled:opacity-30 transition shrink-0"
         title="Undo"
       >
         <Undo className="w-4 h-4" />
@@ -131,7 +131,7 @@ export const TiptapToolbar: React.FC<TiptapToolbarProps> = ({ editor }) => {
         type="button"
         onClick={() => editor.chain().focus().redo().run()}
         disabled={!editor.can().redo()}
-        className="p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] disabled:opacity-30 transition"
+        className="p-1.5 sm:p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] disabled:opacity-30 transition shrink-0"
         title="Redo"
       >
         <Redo className="w-4 h-4" />
